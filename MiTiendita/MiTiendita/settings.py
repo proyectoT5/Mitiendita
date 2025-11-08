@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,7 +75,7 @@ WSGI_APPLICATION = 'MiTiendita.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'django_sqlserver',  # tu base de datos
@@ -89,7 +90,22 @@ DATABASES = {
         }
     }
 }
+"""
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'mssql',
+        'NAME': config('DB_NAME', default='django_sqlserver'),
+        'USER': config('DB_USER', default='django_user'),
+        'PASSWORD': config('DB_PASSWORD', default='dj@ng0'),
+        'HOST': config('DB_HOST', default='DESKTOP-CEIJPA0'),
+        'PORT': config('DB_PORT', default='1433'),
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'encrypt': 'no',
+        },
+    }
+}
 
 
 # Password validation
